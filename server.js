@@ -16,21 +16,25 @@ app.use('/api', apiRoutes);
 app.use('/', htmlRoutes);
 app.use(express.static('public'));
 
-
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/index.html'))
-});
-app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './Develop/public/notes.html'))
-});
+//=================== these routes work
+// // gets index page
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, './Develop/public/index.html'))
+// });
+// // gets notes page
+// app.get('/notes', (req, res) => {
+//     res.sendFile(path.join(__dirname, './Develop/public/notes.html'))
+// });
+// ============================
 
 
 // working route to db.json
-app.get('/api', (req, res) => {
-    console.log(db);
-    res.json(db);
+// app.get('/api', (req, res) => {
+//     console.log(db);
+//     res.json(db);
 
-});
+// });
+//============================================
 
 // this route takes in a ?query and logs to console
 //   app.get('/api', (req, res) => {
@@ -38,6 +42,7 @@ app.get('/api', (req, res) => {
 //     console.log(req.query);
 //     res.json(results);
 //   });
+//==========================================
 
 
 app.listen(PORT, () => {
