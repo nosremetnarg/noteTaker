@@ -1,1 +1,12 @@
-[{"title":"Test Title","text":"Test text", "id": "test_id"}]
+
+{
+    "db": 
+[
+    {
+        "title": "Test Title",
+        "text": "Test text",
+        "id": "test_id"
+    }
+]
+}
+
