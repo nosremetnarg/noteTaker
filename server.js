@@ -29,11 +29,16 @@ app.use(express.static('public'));
 
 
 // working route to db.json
-// app.get('/api', (req, res) => {
-//     console.log(db);
-//     res.json(db);
+app.get('/api', (req, res) => {
+    console.log(db);
+    res.json(db);
 
-// });
+});
+app.post('/api', (req, res) => {
+    console.log(db);
+    res.json(db);
+
+});
 //============================================
 
 // this route takes in a ?query and logs to console
