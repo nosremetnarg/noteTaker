@@ -27,33 +27,42 @@ app.get('/', (req, res) => {
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'))
 });
-
 // ============================
-// working route to db.json
+
+
+// working get route to db.json
 app.get('/api', (req, res) => {
-    console.log(db);
-    res.json(db);
-
-});
-//=============code from jon
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname + '../../Develop/public/index.html'));
-// })
-// app.get("/notes", (req, res) => {
-//   res.sendFile(path.join(__dirname + '../../Develop/public/notes.html'));
-// })
-// ================= code from jon
-
-// // successfully sends json via POST request
-app.post('/api', (req, res) => {
     console.log(db);
     res.json(db);
 });
 
 // successfully sends a post request
 app.post('/', function (req, res) {
-    res.send('Got a POST request on index')
-  })
+  res.send('Got a POST request on index')
+})
+// // successfully sends json via POST request
+app.post('/api', (req, res) => {
+    // req.body = db;
+    req.body.id = db.length.toString();
+
+    const note = createNewNote(req.body, db);
+    res.json(db);
+});
+app.post('/api/notes', (req, res) => {
+});
+
+// create new note and add it to the db file
+function createNewNote(body, db) {
+  const note = body;
+  db.push(note);
+  fs.writeFileSync(
+    path.join(__dirname, './db/db'),
+    JSON.stringify({ notes: db}, null, 2)
+  )
+  console.log(note);
+  return note;
+}
+
 //============================================
 app.post('/notes', function (req, res) {
     res.send('Got a POST request on notes page')
