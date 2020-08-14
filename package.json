@@ -1,25 +1,14 @@
 {
-  "name": "miniature-eureka",
+  "name": "note-taker",
   "version": "1.0.0",
-  "description": "## Description",
+  "description": "",
   "main": "server.js",
-  "dependencies": {
-    "express": "^4.17.1",
-    "jest": "^26.4.0"
-  },
-  "devDependencies": {},
   "scripts": {
-    "test": "test",
-    "start": "node server.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/nosremetnarg/noteTaker.git"
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/nosremetnarg/noteTaker/issues"
-  },
-  "homepage": "https://github.com/nosremetnarg/noteTaker#readme"
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }

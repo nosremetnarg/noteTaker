@@ -6,12 +6,8 @@
         "title": "Test Title",
         "text": "Test text",
         "id": "test_id"
-    },
-    {
-        "title": "note 2",
-        "text": "Test text 2 ",
-        "id": "test_id_2"
     }
+   
 ]
 }
 
