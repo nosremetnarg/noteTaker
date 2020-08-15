@@ -5,11 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const apiRoutes = require('./routes/apiRoutes');
 const htmlRoutes = require('./routes/htmlRoutes');
-const  db  = require('./db/db'); // maybe these are duplicates
+const { db } = require('./db/db'); // maybe these are duplicates
 const router = require('express').Router();
 const uuid = require('uuid/v1')
-// const { notes } = require('./Develop/db/dataBase'); // maybe these are duplicates
-
 // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }));
 // parse incoming JSON data
@@ -20,51 +18,80 @@ app.use(express.static('public'));
 
 
 //====================================
-// // gets index page
+// // loads index page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'))
+  res.sendFile(path.join(__dirname, './public/index.html'))
 });
-// // gets notes page
+// // loads notes page
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/notes.html'))
+  res.sendFile(path.join(__dirname, './public/notes.html'))
 });
 //====================================
 
-// working route to db.json
+// route to load notes from db
 app.get('/api/notes', (req, res) => {
-  console.log(db);
+  // console.log(db);
   res.json(db);
 });
 
-// write note
+// write note function 
 app.post('/api/notes', (req, res) => {
-  console.log(db);
+  // console.log(db);
   //add the ID property
   const newNote = req.body
   newNote.id = uuid()
-  console.log(newNote + "this is a new note");
-  db.push(req.body);
-  fs.writeFile('db/db.json', JSON.stringify(db), function(err, data){
-      if (err) {
-          throw err
-      } else {
-          res.send(data)
-      }
+  // console.log(newNote);
+  const note = req.body
+  db.push(note);
+  fs.writeFile('db/db.json', JSON.stringify({ db }, null, 2), function (err, data) {
+    if (err) {
+      throw err
+    } else {
+      res.send(data)
+    }
   });
 });
 
+function findById(id, db) {
+  const result = db.filter(note => note.id === id)[0];
+  // console.log(result);
+  return result;
+}
 
+app.delete('/api/notes/:id', (req, res) => {
+  const result = findById(req.params.id, db)
+  console.log(result);
+  const index = (db.indexOf(result));
+  console.log(index);
+  db.splice(index ,1);
+  fs.writeFile('db/db.json', JSON.stringify({ db }, null, 2), function (err, data) {
+    if (err) {
+      throw err
+    } else {
+      res.send(data)
+    }
+  });
+});
+// route to delete a note
+// app.delete('/api/notes/:id', (req, res) => {
+//   const result = findById(req.params.id, db)
+//   console.log(result);
+//   if (result) {
+//     res.json(result);
+//   } else {
+//     res.sendStatus(404);
+//   }
+//   // res.send({type:'DELETE'});
+// });
 
 //============================================
-app.post('/notes', function (req, res) {
-    res.send('Got a POST request on notes page')
-})
 
+// catch-all route for initial visitors
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './public/index.html'))
 });
 
 
 app.listen(PORT, () => {
-    console.log(`API server now on port ${PORT}!`);
+  console.log(`API server now on port ${PORT}!`);
 });
