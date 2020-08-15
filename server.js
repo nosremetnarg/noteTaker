@@ -5,8 +5,9 @@ const fs = require('fs');
 const path = require('path');
 const apiRoutes = require('./routes/apiRoutes');
 const htmlRoutes = require('./routes/htmlRoutes');
-const { db } = require('./db/db'); // maybe these are duplicates
+const  db  = require('./db/db'); // maybe these are duplicates
 const router = require('express').Router();
+const uuid = require('uuid/v1')
 // const { notes } = require('./Develop/db/dataBase'); // maybe these are duplicates
 
 // parse incoming string or array data
@@ -18,7 +19,7 @@ app.use('/', htmlRoutes);
 app.use(express.static('public'));
 
 
-//=================== these routes work
+//====================================
 // // gets index page
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
@@ -27,58 +28,40 @@ app.get('/', (req, res) => {
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, './public/notes.html'))
 });
-// ============================
+//====================================
 
-
-// working get route to db.json
-app.get('/api', (req, res) => {
-    console.log(db);
-    res.json(db);
+// working route to db.json
+app.get('/api/notes', (req, res) => {
+  console.log(db);
+  res.json(db);
 });
 
-// successfully sends a post request
-app.post('/', function (req, res) {
-  res.send('Got a POST request on index')
-})
-// // successfully sends json via POST request
-app.post('/api', (req, res) => {
-    // req.body = db;
-    req.body.id = db.length.toString();
-
-    const note = createNewNote(req.body, db);
-    res.json(db);
-});
+// write note
 app.post('/api/notes', (req, res) => {
+  console.log(db);
+  //add the ID property
+  const newNote = req.body
+  newNote.id = uuid()
+  console.log(newNote + "this is a new note");
+  db.push(req.body);
+  fs.writeFile('db/db.json', JSON.stringify(db), function(err, data){
+      if (err) {
+          throw err
+      } else {
+          res.send(data)
+      }
+  });
 });
 
-// create new note and add it to the db file
-function createNewNote(body, db) {
-  const note = body;
-  db.push(note);
-  fs.writeFileSync(
-    path.join(__dirname, './db/db'),
-    JSON.stringify({ notes: db}, null, 2)
-  )
-  console.log(note);
-  return note;
-}
+
 
 //============================================
 app.post('/notes', function (req, res) {
     res.send('Got a POST request on notes page')
-  })
-// this route takes in a ?query and logs to console
-//   app.get('/api', (req, res) => {
-//     let results = db;
-//     console.log(req.query);
-//     res.json(results);
-//   });
-//==========================================
+})
 
-// redoing the module
-// route to api database
-app.get('/api/db', (req, res) => {
-  res.json(db);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, './public/index.html'))
 });
 
 
