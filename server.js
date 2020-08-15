@@ -5,7 +5,8 @@ const fs = require('fs');
 const path = require('path');
 const apiRoutes = require('./routes/apiRoutes');
 const htmlRoutes = require('./routes/htmlRoutes');
-const { db } = require('./db/db'); // maybe these are duplicates
+const db = require('./db/db');
+// console.log(item1); 
 const router = require('express').Router();
 const uuid = require('uuid/v1')
 // parse incoming string or array data
@@ -39,7 +40,7 @@ app.post('/api/notes', (req, res) => {
   newNote.id = uuid()
   const note = req.body
   db.push(note);
-  fs.writeFile('db/db.json', JSON.stringify({ db }, null, 2), function (err, data) {
+  fs.writeFile('db/db.json', JSON.stringify(db , null, 2), function (err, data) {
     if (err) {
       throw err
     } else {
@@ -61,7 +62,7 @@ app.delete('/api/notes/:id', (req, res) => {
   const index = (db.indexOf(result));
   console.log(index);
   db.splice(index ,1);
-  fs.writeFile('db/db.json', JSON.stringify({ db }, null, 2), function (err, data) {
+  fs.writeFile('db/db.json', JSON.stringify(db , null, 2), function (err, data) {
     if (err) {
       throw err
     } else {
