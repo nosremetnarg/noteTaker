@@ -30,17 +30,13 @@ app.get('/notes', (req, res) => {
 
 // route to load notes from db
 app.get('/api/notes', (req, res) => {
-  // console.log(db);
   res.json(db);
 });
 
 // write note function 
 app.post('/api/notes', (req, res) => {
-  // console.log(db);
-  //add the ID property
   const newNote = req.body
   newNote.id = uuid()
-  // console.log(newNote);
   const note = req.body
   db.push(note);
   fs.writeFile('db/db.json', JSON.stringify({ db }, null, 2), function (err, data) {
@@ -52,13 +48,14 @@ app.post('/api/notes', (req, res) => {
   });
 });
 
+// find note id
 function findById(id, db) {
   const result = db.filter(note => note.id === id)[0];
   // console.log(result);
   return result;
-}
-
-app.delete('/api/notes/:id', (req, res) => {
+} 
+// delete function
+app.delete('/api/notes/:id', (req, res) => { 
   const result = findById(req.params.id, db)
   console.log(result);
   const index = (db.indexOf(result));
@@ -72,17 +69,7 @@ app.delete('/api/notes/:id', (req, res) => {
     }
   });
 });
-// route to delete a note
-// app.delete('/api/notes/:id', (req, res) => {
-//   const result = findById(req.params.id, db)
-//   console.log(result);
-//   if (result) {
-//     res.json(result);
-//   } else {
-//     res.sendStatus(404);
-//   }
-//   // res.send({type:'DELETE'});
-// });
+
 
 //============================================
 
