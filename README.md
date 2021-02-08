@@ -23,6 +23,10 @@ An note application using CRUD. User can create, store and delete notes.
 
 Node
 Express
+jQuery
+JavaScript
+Insomniac
+Jest
 
 
 
