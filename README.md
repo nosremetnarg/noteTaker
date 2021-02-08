@@ -28,6 +28,8 @@ JavaScript
 Insomniac
 Jest
 
+## Contribution
 
+Grant Emerson
 
 
