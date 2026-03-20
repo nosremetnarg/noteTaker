@@ -1,15 +1,25 @@
 {
   "name": "note-taker",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple note-taking app",
   "main": "server.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "node server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4",
+    "express": "^4.17.1",
+    "jest": "^26.4.0",
     "uuid": "^7.0.3"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nosremetnarg/noteTaker.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nosremetnarg/noteTaker/issues"
+  },
+  "homepage": "https://github.com/nosremetnarg/noteTaker#readme"
 }

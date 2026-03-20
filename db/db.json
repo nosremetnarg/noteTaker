@@ -3,5 +3,15 @@
     "title": "Note title",
     "text": "this is the body of the note\n",
     "id": "780a3c20-24a0-11f1-80e4-f70fe8de3cd3"
+  },
+  {
+    "title": "A second note",
+    "text": "this is the second note",
+    "id": "4c2326b0-24a2-11f1-8e80-5706ce62fd83"
+  },
+  {
+    "title": "ok edited",
+    "text": "this is edited",
+    "id": "588ddcb0-24a2-11f1-8e80-5706ce62fd83"
   }
 ]
