@@ -6,13 +6,12 @@ const path = require('path')
 const apiRoutes = require('./routes/apiRoutes')
 const htmlRoutes = require('./routes/htmlRoutes')
 const db = require('./db/db')
-// console.log(item1);
-const router = require('express').Router()
+// const router = require('express').Router()
 const { v1: uuid } = require('uuid') // parse incoming string or array data
 app.use(express.urlencoded({ extended: true }))
 // parse incoming JSON data
 app.use(express.json())
-app.use('/api', apiRoutes)
+// app.use('/api', apiRoutes)
 app.use('/', htmlRoutes)
 app.use(express.static('public'))
 
@@ -33,6 +32,23 @@ app.post('/api/notes', (req, res) => {
     } else {
       res.send(data)
     }
+  })
+})
+
+// edit note function
+app.put('/api/notes/:id', (req, res) => {
+  const result = findById(req.params.id, db)
+  if (!result) {
+    return res.status(404).json({ error: 'Note not found' })
+  }
+  const index = db.indexOf(result)
+  db[index] = { ...result, ...req.body }
+
+  fs.writeFile('db/db.json', JSON.stringify(db, null, 2), (err) => {
+    if (err) {
+      return res.status(500).json({ error: 'Failed to save note' })
+    }
+    res.json(db[index])
   })
 })
 
